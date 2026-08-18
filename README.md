@@ -1,12 +1,19 @@
-# This code is created by C-Firefly
-#
-# GitHub: https://c-firefly.github.io
+📦 Telegram Backup System
 
-📦 Telegram Backup Uploader for Termux
+«Telegram Backup Uploader for Termux»
 
-A simple Python-based backup system for Termux that scans files from a selected folder and uploads them to a Telegram Channel using a Telegram Bot.
+A simple Python-based backup system for Termux/Android that scans files from a selected folder and uploads them to a Telegram Channel using a Telegram Bot.
 
 The system keeps a local record of uploaded files and stores metadata about uploaded files so that the same files can be skipped during future backups.
+
+---
+
+👨‍💻 Author
+
+C-Firefly
+
+- 🌐 GitHub: https://github.com/C-Firefly
+- 🌐 Portfolio: https://c-firefly.github.io
 
 ---
 
@@ -24,19 +31,16 @@ The system keeps a local record of uploaded files and stores metadata about uplo
 - 📏 Configurable maximum file size
 - ⏱️ Configurable upload delay
 - 📊 Backup completion statistics
+- 🕐 Automatic scheduled backup
 - 📱 Designed for Termux/Android
 
 ---
 
 🎯 Use Cases
 
-This project can be useful if you want to:
-
-📱 1. Backup Android files
+📱 1. Backup Android Files
 
 You can use Termux to backup files from your Android storage to a private Telegram Channel.
-
-Example:
 
 Android Storage
       │
@@ -51,7 +55,7 @@ Private Telegram Channel
 
 ---
 
-🗂️ 2. Backup specific folders
+🗂️ 2. Backup Specific Folders
 
 You can configure the backup directory to scan folders such as:
 
@@ -60,19 +64,24 @@ You can configure the backup directory to scan folders such as:
 /storage/emulated/0/Download
 /storage/emulated/0/Pictures
 
-You can also scan the complete Termux storage directory.
+You can also scan the complete Termux shared storage directory.
 
 ---
 
-💾 3. Personal cloud-style backup
+💾 3. Personal Cloud-Style Backup
 
 A Telegram private channel can be used as a simple remote storage destination.
 
-The bot uploads files to the channel while "backup_state.json" and "database.json" keep track of uploaded files.
+The bot uploads files to the channel while:
+
+backup_state.json
+database.json
+
+keep track of uploaded files and their metadata.
 
 ---
 
-🔄 4. Re-run backups on schedule without uploading everything again
+🔄 4. Re-run Backups Without Uploading Everything Again
 
 After a successful upload, the file path is stored in:
 
@@ -82,14 +91,22 @@ When the backup runs again, previously uploaded files can be skipped.
 
 ---
 
-🔄 5. Schedule uploaded.
+🕐 5. Automatic Scheduled Backup
 
-When you run backup.py the system starts uploading your files and wait for next schedule.
+The backup scheduler can automatically run at:
 
-File auto upload schedule is 00 a.m., 6 a.m., 12 p.m. and 18 p.m.
+00:00
+06:00
+12:00
+18:00
 
-System will automatically detect files and upload.
-The system also have duplicate detection to prevent duplicate files.
+When you run:
+
+python backup.py
+
+the system starts the scheduler and performs the backup according to the configured schedule.
+
+The system also performs duplicate detection to prevent unnecessary uploads.
 
 ---
 
@@ -103,15 +120,15 @@ The default configuration is:
 
 Files larger than the configured limit are skipped.
 
-Example:
+Example
 
-photo.jpg      → Upload
-video.mp4      → Upload
-large_file.zip → Skip
+photo.jpg       → Upload
+video.mp4       → Upload
+large_file.zip  → Skip
 
 The limit is controlled through:
 
-config.BACKUP_SETTINGS["MAX_FILE_SIZE_MB"]
+BACKUP_SETTINGS["MAX_FILE_SIZE_MB"]
 
 ---
 
@@ -119,19 +136,20 @@ config.BACKUP_SETTINGS["MAX_FILE_SIZE_MB"]
 
 You need:
 
-- Android phone
-- Termux
-- Python 3
-- Telegram account
-- Telegram Bot
-- Telegram Channel
+- 📱 Android phone
+- 📦 Termux
+- 🐍 Python 3
+- 📱 Telegram account
+- 🤖 Telegram Bot
+- 📢 Telegram Channel
+- 🌐 Internet connection
 
-Recommended:
+Recommended
 
-- Private Telegram Channel
-- Dedicated bot for backup
-- Stable internet connection
-- Enough Telegram storage/quota for your use case
+- 🔒 Private Telegram Channel
+- 🤖 Dedicated bot for backup
+- 🌐 Stable internet connection
+- 💾 Enough available Telegram storage/quota for your use case
 
 ---
 
@@ -141,7 +159,7 @@ Open Telegram and search for:
 
 @BotFather
 
-Create a new bot:
+Start a conversation with BotFather and use:
 
 /newbot
 
@@ -151,21 +169,23 @@ BotFather will provide a token similar to:
 
 123456789:AAxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-Keep this token private.
+«⚠️ Keep this token private. Never publish your bot token on GitHub.»
+
+If your token is accidentally exposed, immediately revoke/regenerate it through BotFather.
 
 ---
 
 📢 Create Telegram Channel
 
-Create a Telegram Channel for storing backups.
+Create a Telegram Channel for storing your backups.
 
-Recommended:
+Recommended
 
 Private Channel
 
-Add your bot as an administrator.
+Add your Telegram bot as an Administrator.
 
-The bot needs permission to post messages/documents in the channel.
+The bot needs permission to send/post documents and messages to the channel.
 
 ---
 
@@ -173,23 +193,29 @@ The bot needs permission to post messages/documents in the channel.
 
 The channel ID must be placed in your configuration.
 
-For a private Telegram channel, it commonly looks like:
+For a private Telegram Channel, the ID commonly looks like:
 
 -100xxxxxxxxxxxx
 
 Make sure the bot has permission to send documents to the channel.
 
+«⚠️ Do not publish your real Channel ID together with your bot token in a public repository if you want to keep the backup destination private.»
+
 ---
 
 ⚙️ Configuration
 
-The project uses a "config.py" file.
+The project uses a:
 
-Example:
+config.py
+
+file for configuration.
+
+Example
 
 BOT_TOKEN = "YOUR_BOT_TOKEN"
 
-PRIVATE_CHANNEL_ID = -100**********
+PRIVATE_CHANNEL_ID = -1001234567890
 
 DEVICE_NAME = "My-Android"
 
@@ -207,6 +233,18 @@ BACKUP_SETTINGS = {
     "UPLOAD_DELAY": 1
 }
 
+Configuration Options
+
+Option| Description
+"BOT_TOKEN"| Telegram Bot API token
+"PRIVATE_CHANNEL_ID"| Destination Telegram Channel ID
+"DEVICE_NAME"| Name used to identify the device
+"STORAGE_DIR"| Directory that will be scanned
+"IGNORE_FOLDERS"| Folders that should be skipped
+"MAX_FILE_SIZE_MB"| Maximum allowed file size
+"REMOVE_DUPLICATES"| Enable/disable duplicate detection
+"UPLOAD_DELAY"| Delay between uploads
+
 ---
 
 📥 Installation
@@ -215,11 +253,11 @@ BACKUP_SETTINGS = {
 
 Install Termux from a trusted source such as F-Droid or the official Termux project.
 
-Do not use an outdated Termux version if possible.
+«⚠️ Avoid using an outdated Termux version if possible.»
 
 ---
 
-2. Update packages
+2. Update Packages
 
 Open Termux and run:
 
@@ -228,53 +266,91 @@ pkg upgrade -y
 
 ---
 
-3. Install Backup System
+3. Install Git
 
 pkg install git -y
 
-Clone repository:
+---
+
+4. Clone the Repository
 
 git clone https://github.com/C-Firefly/Telegram-Backup-System
 
-Change directory:
+---
+
+5. Enter the Project Directory
 
 cd Telegram-Backup-System
 
+---
+
+6. Run the Installer
+
 bash install.sh
+
+The installer will prepare the required environment for the backup system.
+
+---
+
+📱 Termux Storage Permission
+
+If the program needs access to Android shared storage, run:
+
+termux-setup-storage
+
+When Android asks for storage permission, allow it.
+
+After granting permission, Termux normally provides access through:
+
+~/storage/shared
+
+For example:
+
+~/storage/shared/DCIM
+~/storage/shared/Download
+~/storage/shared/Documents
+
+«💡 Make sure "STORAGE_DIR" in "config.py" matches the directory you actually want to scan.»
 
 ---
 
 🔐 Security
 
-Do not upload or publish your bot token to GitHub.
+🚨 Never Publish Your Bot Token
 
-Bad:
+Do not upload your real token to GitHub.
 
-BOT_TOKEN = "123456789:AAxxxxxxxx"
+❌ Bad
 
-inside a public repository.
+BOT_TOKEN = "123456789:AAxxxxxxxxxxxxxxxx"
 
-Better:
+Do not commit a real token inside a public repository.
+
+---
+
+✅ Better
+
+Keep your private configuration separate:
 
 config.py
 
-should be excluded from Git.
+and add it to:
 
-Add:
+.gitignore
+
+Example:
 
 config.py
 
-to ".gitignore".
-
-For a public GitHub repository, an even better solution is to use environment variables or a ".env" file.
+You can also use environment variables or a ".env" file for better secret management.
 
 ---
 
 📁 Project Structure
 
-A basic project can look like:
+A basic project structure looks like:
 
-telegram-backup/
+Telegram-Backup-System/
 │
 ├── backup.py
 ├── config.py
@@ -284,15 +360,17 @@ telegram-backup/
 ├── .gitignore
 └── README.md
 
+«⚠️ If "config.py" contains your real bot token, keep it excluded from Git.»
+
 ---
 
-💾 Local Backup Files
+💾 Local Backup State
 
-backup_state.json
+"backup_state.json"
 
 This file stores information about files that have already been uploaded.
 
-Example:
+Example
 
 [
     "/storage/shared/DCIM/photo.jpg",
@@ -303,17 +381,23 @@ The purpose is to prevent unnecessary duplicate uploads.
 
 Important
 
-If "backup_state.json" does not exist, the program starts with an empty state.
+If:
 
-It can be created automatically after a successful upload.
+backup_state.json
+
+does not exist, the program starts with an empty state.
+
+The file can be created automatically after a successful upload.
 
 ---
 
-database.json
+🗃️ Database
+
+"database.json"
 
 This file stores metadata about uploaded files.
 
-Example:
+Example
 
 {
     "My-Android": {
@@ -332,13 +416,13 @@ Example:
 
 The database contains information such as:
 
-- Device name
-- Folder
-- File name
-- File size
-- Upload date
-- Telegram message ID
-- Telegram file ID
+- 📱 Device name
+- 📂 Folder
+- 📄 File name
+- 📏 File size
+- 📅 Upload date
+- 📨 Telegram message ID
+- 🆔 Telegram file ID
 
 ---
 
@@ -361,7 +445,7 @@ The program will:
 9. Upload the file
 10. Save Telegram information
 11. Update local state
-12. Check scheduled
+12. Check the schedule
 13. Continue scanning
 
 ---
@@ -425,7 +509,7 @@ IGNORE_FOLDERS = [
     ".cache"
 ]
 
-The program checks paths against the configured ignored folder names.
+The program checks file paths against the configured ignored folder names.
 
 ---
 
@@ -439,11 +523,11 @@ When enabled, the program checks whether the file path already exists in:
 
 backup_state.json
 
-If it exists:
+If the path exists
 
 Duplicate → Skip
 
-If it does not exist:
+If the path does not exist
 
 New file → Upload
 
@@ -453,7 +537,7 @@ New file → Upload
 
 The current version is intentionally simple.
 
-1. Path-based duplicate detection
+1. Path-Based Duplicate Detection
 
 The current duplicate system checks the file path, not the actual file contents.
 
@@ -471,25 +555,25 @@ it may be uploaded again.
 
 ---
 
-2. File modification is not detected
+2. File Modification Is Not Detected
 
 If a previously uploaded file is modified but keeps the same path, the current system may still consider it uploaded.
 
 ---
 
-3. JSON database
+3. JSON Database
 
-The database uses:
+The database currently uses:
 
 database.json
 
 This is simple and easy to understand, but it is not ideal for very large backup systems.
 
-SQLite would be a better option for larger projects.
+For larger projects, SQLite would be a better option.
 
 ---
 
-🚀 New Updates:
+🚀 Planned Improvements
 
 The project can be improved significantly.
 
@@ -551,24 +635,24 @@ Attempt 2
    ↓
 Attempt 3
 
-This is especially useful for temporary Telegram/network problems.
+This is especially useful for temporary Telegram or network problems.
 
 ---
 
 🕐 4. Scheduled Backup
 
-The system could automatically run:
+The scheduler can automatically run:
 
-Every 6 hours
-Every day at 00,06,12,18
+00:00
+06:00
+12:00
+18:00
+
+or every six hours depending on the implementation.
 
 ---
 
 🚀 Recommended Future Updates
-
-The project can be improved significantly.
-
----
 
 🧮 1. Hash-Based Duplicate Detection
 
@@ -576,28 +660,28 @@ Instead of checking only:
 
 file path
 
-calculate a file hash such as:
+the system could calculate a file hash such as:
 
 SHA-256
 
-Then:
+For example:
 
 File A → SHA256 = XXXXX
 File B → SHA256 = XXXXX
 
-means they are identical.
+If both hashes are identical, the files are likely identical.
 
-This would provide much better duplicate detection.
+This would provide much better duplicate detection than path-based checking.
 
 ---
 
 📝 2. Better Error Handling
 
-Instead of generic:
+Instead of using only:
 
 except Exception:
 
-use specific exceptions where possible.
+the system could use specific exceptions where appropriate.
 
 For example:
 
@@ -608,13 +692,13 @@ Telegram API errors
 Network errors
 Timeout errors
 
-This makes debugging easier.
+This makes debugging and error reporting easier.
 
 ---
 
 📊 3. Progress Bar
 
-Instead of only:
+Instead of only displaying:
 
 Uploading: video.mp4
 
@@ -622,6 +706,8 @@ the program could show:
 
 video.mp4
 ██████████████░░░░░░ 72%
+
+This would make large uploads easier to monitor.
 
 ---
 
@@ -643,7 +729,7 @@ This would make searching and managing thousands of files much easier.
 
 📱 5. Telegram Bot Control
 
-A future version could allow commands such as:
+A future version could support commands such as:
 
 /start
 /backup
@@ -652,17 +738,17 @@ A future version could allow commands such as:
 /files
 /get filename
 
-This would allow the backup system to be controlled from Telegram.
+This would allow the backup system to be controlled remotely through Telegram.
 
 ---
 
 📂 6. Multiple Backup Folders
 
-Instead of one:
+Instead of supporting only:
 
 STORAGE_DIR
 
-support:
+a future version could support:
 
 BACKUP_FOLDERS = [
     "/storage/shared/DCIM",
@@ -670,19 +756,22 @@ BACKUP_FOLDERS = [
     "/storage/shared/Download"
 ]
 
+This would allow different folders to be backed up independently.
+
 ---
 
 🛡️ Recommended Security Improvements
 
-For production/public use:
+For production or public use:
 
-- Never expose "BOT_TOKEN"
-- Use environment variables
-- Keep "config.py" out of Git
-- Use a private Telegram Channel
-- Restrict who can access the backup channel
-- Avoid storing sensitive information unnecessarily
-- Consider encrypting sensitive files before uploading
+- 🔐 Never expose "BOT_TOKEN"
+- 🔑 Use environment variables for secrets
+- 🚫 Keep "config.py" out of Git
+- 🔒 Use a private Telegram Channel
+- 👥 Restrict who can access the backup channel
+- 🧹 Avoid storing sensitive information unnecessarily
+- 🔐 Consider encrypting sensitive files before uploading
+- 🔄 Regenerate the bot token immediately if it is exposed
 
 ---
 
@@ -714,24 +803,119 @@ For production/public use:
 
 ---
 
-📌 Important Note
+🔄 Backup Workflow
+
+Start
+  │
+  ▼
+Load Configuration
+  │
+  ▼
+Load Backup State
+  │
+  ▼
+Scan Files
+  │
+  ▼
+Check Ignored Folder
+  │
+  ├── Yes → Skip
+  │
+  └── No
+       │
+       ▼
+Check File Size
+       │
+       ├── Too Large → Skip
+       │
+       └── Valid
+            │
+            ▼
+     Check Duplicate
+            │
+       ├── Duplicate → Skip
+       │
+       └── New File
+            │
+            ▼
+      Upload to Telegram
+            │
+            ▼
+      Save File Metadata
+            │
+            ▼
+     Update Backup State
+            │
+            ▼
+       Next File
+
+---
+
+📌 Important Notes
 
 This project is intended primarily as a personal backup utility.
 
-Telegram is being used as the remote destination, while Termux performs the local file scanning and upload operations.
+Telegram is used as the remote destination, while Termux performs local file scanning and upload operations.
 
 The current version is simple and can be extended into a more advanced backup system with:
 
-- Multi-device support
-- Telegram remote control
-- File hashing
-- SQLite
-- Automatic scheduling
-- Retry system
-- Resume support
-- Backup history
-- File search
-- Restore/download functionality
+- 📱 Multi-device support
+- 🤖 Telegram remote control
+- 🧮 File hashing
+- 🗃️ SQLite database
+- 🕐 Automatic scheduling
+- 🔄 Retry system
+- ▶️ Resume support
+- 📊 Backup history
+- 🔎 File search
+- 📥 Restore/download functionality
+- 🔐 File encryption
 
 ---
-Hope you have a great day.
+
+⚡ Quick Start
+
+If Termux is already installed, you can start with:
+
+pkg update -y && pkg upgrade -y
+pkg install git -y
+termux-setup-storage
+git clone https://github.com/C-Firefly/Telegram-Backup-System
+cd Telegram-Backup-System
+bash install.sh
+
+Then configure your Telegram Bot and Channel in:
+
+config.py
+
+Finally run:
+
+python backup.py
+
+---
+
+⭐ Support the Project
+
+If you find this project useful:
+
+- ⭐ Star the repository
+- 🐛 Report bugs
+- 💡 Suggest improvements
+- 🔧 Contribute code
+- 📢 Share the project
+
+---
+
+📜 License
+
+This project is provided for personal and educational use.
+
+Please check the repository for the current license and usage terms.
+
+---
+
+❤️ Thank You
+
+Thanks for checking out Telegram Backup System.
+
+Hope you have a great day! 🚀

@@ -2,14 +2,14 @@
 # TELEGRAM FULL STORAGE BACKUP CONFIGARATION
 # ==========================================
 
-BOT_TOKEN = "Your-Telegram-Bot-Token"
+BOT_TOKEN = "Your_Bot_Token"
 
 # Private Telegram Channel ID
-PRIVATE_CHANNEL_ID = Your-Telegram-Channel-Id
+PRIVATE_CHANNEL_ID = -100**********
 
 
 # Device Name
-DEVICE_NAME = "My-Android"
+DEVICE_NAME = "My_Android"
 #DEVICE_NAME = os.system("getprop ro.product.model")
 
 # =========================================
